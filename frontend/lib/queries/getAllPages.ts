@@ -1,5 +1,5 @@
-import {fetchGraphQL} from '@/lib/functions'
-import {Page} from '@/lib/types'
+import {fetchGraphQL} from '@/lib/functions';
+import {Page} from '@/lib/types';
 
 /**
  * Fetch all pages.
@@ -32,9 +32,9 @@ export default async function getAllPages() {
         }
       }
     }
-  `
+  `;
 
-  const response = await fetchGraphQL(query)
+  const response = await fetchGraphQL(query);
 
-  return response.data.pages.nodes as Page[]
+  return response.data.pages.nodes as Page[];
 }

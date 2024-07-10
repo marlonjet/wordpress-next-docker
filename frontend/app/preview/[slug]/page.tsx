@@ -1,11 +1,11 @@
-import config from '@/lib/config'
-import getPreview from '@/lib/queries/getPreview'
-import {Metadata} from 'next'
+import config from '@/lib/config';
+import getPreview from '@/lib/queries/getPreview';
+import {Metadata} from 'next';
 
 // Types.
 interface PreviewProps {
-  params: {slug: string}
-  searchParams: {[key: string]: string | string[] | undefined}
+  params: {slug: string};
+  searchParams: {[key: string]: string | string[] | undefined};
 }
 
 /**
@@ -15,8 +15,8 @@ interface PreviewProps {
  *
  * @see https://nextjs.org/docs/app/api-reference/file-conventions/route-segment-config
  */
-export const dynamic = 'force-dynamic'
-export const runtime = 'edge'
+export const dynamic = 'force-dynamic';
+export const runtime = 'edge';
 
 /**
  * Generate the metadata for each static route at build time.
@@ -26,23 +26,23 @@ export const runtime = 'edge'
 export async function generateMetadata({
   params
 }: {
-  params: {slug: string}
+  params: {slug: string};
 }): Promise<Metadata | null> {
   // Get the preview post.
-  const post = await getPreview(params.slug)
+  const post = await getPreview(params.slug);
 
   // No preview? Bail...
   if (!post) {
-    return {}
+    return {};
   }
 
   return {
-    title: `${post.title} - ${config.siteName}`,
-    description: post.excerpt,
+    title: `${post?.title} - ${config.siteName}`,
+    description: post?.excerpt,
     robots: 'noindex',
     openGraph: {
-      title: `${post.title} - ${config.siteName}`,
-      description: post.excerpt,
+      title: `${post?.title} - ${config.siteName}`,
+      description: post?.excerpt,
       url: `${config.siteUrl}/blog/${params.slug}`,
       siteName: config.siteName,
       locale: 'en_US',
@@ -56,7 +56,7 @@ export async function generateMetadata({
         }
       ]
     }
-  }
+  };
 }
 
 /**
@@ -71,7 +71,7 @@ export async function generateMetadata({
  */
 export default async function Preview({params, searchParams}: PreviewProps) {
   // Get the secret from the query parameters.
-  const secret = searchParams.secret
+  const secret = searchParams.secret;
 
   // No secret? Bail.
   if (!secret || secret !== process.env.NEXTJS_PREVIEW_SECRET) {
@@ -84,11 +84,11 @@ export default async function Preview({params, searchParams}: PreviewProps) {
           parameter.
         </p>
       </div>
-    )
+    );
   }
 
   // Attempt to get the preview.
-  const post = await getPreview(params.slug)
+  const post = await getPreview(params.slug);
 
   // No preview available? Bail.
   if (!post) {
@@ -103,25 +103,25 @@ export default async function Preview({params, searchParams}: PreviewProps) {
         </p>
         <p>Please verify the Post ID and try again.</p>
       </div>
-    )
+    );
   }
 
   return (
     <article>
       <header>
-        <h2 dangerouslySetInnerHTML={{__html: post.title}} />
+        <h2 dangerouslySetInnerHTML={{__html: post?.title}} />
         <p className="italic">
-          By {post.author.node.name} on <time>{post.date}</time>
+          By {post?.author?.node?.name} on <time>{post?.date}</time>
         </p>
       </header>
-      <div dangerouslySetInnerHTML={{__html: post.content}} />
+      <div dangerouslySetInnerHTML={{__html: post?.content}} />
       <footer className="flex items-center justify-between gap-4 pb-4">
         <div>
           <h3>Categories</h3>
           <ul className="m-0 flex list-none gap-2 p-0">
-            {post.categories.nodes.map((category) => (
-              <li className="m-0 p-0" key={category.databaseId}>
-                {category.name}
+            {post?.categories?.nodes.map((category) => (
+              <li className="m-0 p-0" key={category?.databaseId}>
+                {category?.name}
               </li>
             ))}
           </ul>
@@ -130,14 +130,14 @@ export default async function Preview({params, searchParams}: PreviewProps) {
         <div>
           <h3>Tags</h3>
           <ul className="m-0 flex list-none gap-2 p-0">
-            {post.tags.nodes.map((tag) => (
-              <li className="m-0 p-0" key={tag.databaseId}>
-                {tag.name}
+            {post?.tags?.nodes.map((tag) => (
+              <li className="m-0 p-0" key={tag?.databaseId}>
+                {tag?.name}
               </li>
             ))}
           </ul>
         </div>
       </footer>
     </article>
-  )
+  );
 }

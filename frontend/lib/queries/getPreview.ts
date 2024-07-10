@@ -1,5 +1,5 @@
-import {fetchGraphQL} from '@/lib/functions'
-import {Post} from '@/lib/types'
+import {fetchGraphQL} from '@/lib/functions';
+import {Post} from '@/lib/types';
 
 /**
  * Fetch a preview post.
@@ -7,7 +7,7 @@ import {Post} from '@/lib/types'
 export default async function getPreview(id: string) {
   const query = `
     query PreviewPost($id: ID!) {
-      post(id: $id, idType: DATABASE_ID) {
+      post(id: $id, idType: SLUG) {
         databaseId
         date
         modified
@@ -49,13 +49,13 @@ export default async function getPreview(id: string) {
         }
       }
     }
-  `
+  `;
 
   const variables = {
     id: id
-  }
+  };
 
-  const response = await fetchGraphQL(query, variables, true)
+  const response = await fetchGraphQL(query, variables, true);
 
-  return response.data.post as Post
+  return response.data.post as Post;
 }

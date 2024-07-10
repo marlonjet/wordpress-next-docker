@@ -1,10 +1,11 @@
 import getAllPosts from '@/lib/queries/getAllPosts';
+import getAllProducts from '@/lib/queries/getAllProducts';
 import getPageBySlug from '@/lib/queries/getPageBySlug';
 import {Post} from '@/lib/types';
 import Image from 'next/image';
 import Link from 'next/link';
 import {notFound} from 'next/navigation';
-
+import {ProductNode} from '@/lib/types';
 /**
  * The homepage route.
  *
@@ -16,13 +17,13 @@ export default async function Home() {
 
   // Fetch posts from WordPress.
   const posts = await getAllPosts();
+  const products = await getAllProducts();
 
   // No data? Bail...
-  if (!posts || !posts.length || !homepage) {
+  if (!posts || !posts.length || !homepage || !products) {
     notFound();
   }
 
-  // console.log(posts);
   return (
     <main className="flex flex-col gap-8">
       <article>
@@ -31,6 +32,27 @@ export default async function Home() {
       </article>
 
       <aside>
+        <div>
+          <h2>Latest Products</h2>
+          <div className="grid grid-cols-3 gap-4">
+            {products.map((product: ProductNode) => (
+              <div key={product?.databaseId}>
+                <div>
+                  <Image
+                    alt={product?.image?.altText}
+                    height={product?.image?.mediaDetails?.height}
+                    src={product?.image?.sourceUrl}
+                    width={product?.image?.mediaDetails?.width}
+                    priority={true}
+                  />
+                </div>
+                <div>
+                  <h3 className="text-white">{product?.name}</h3>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
         <h2 className="text-white">Latest Posts</h2>
         <div className="flex flex-wrap gap-8">
           {posts.map((post: Post) => (

@@ -1,18 +1,18 @@
 export interface SearchResults {
-  id: number
-  title: string
-  url: string
-  type: string
-  subtype: string
+  id: number;
+  title: string;
+  url: string;
+  type: string;
+  subtype: string;
 }
 
 export interface Children {
-  children: React.ReactNode
+  children: React.ReactNode;
 }
 
 export interface GraphQLResponse<T = any> {
-  data?: T
-  errors?: Array<{message: string}>
+  data?: T;
+  errors?: Array<{message: string}>;
 }
 
 export interface Menu {
@@ -20,24 +20,24 @@ export interface Menu {
     edges: [
       {
         node: {
-          uri: string
-          label: string
-          databaseId: string
-        }
+          uri: string;
+          label: string;
+          databaseId: string;
+        };
       }
-    ]
-  }
+    ];
+  };
 }
 
 export interface FeaturedImage {
   node: {
-    altText: string
-    sourceUrl: string
+    altText: string;
+    sourceUrl: string;
     mediaDetails: {
-      height: number
-      width: number
-    }
-  }
+      height: number;
+      width: number;
+    };
+  };
 }
 
 export interface Menu {
@@ -45,126 +45,175 @@ export interface Menu {
     edges: [
       {
         node: {
-          uri: string
-          label: string
-          databaseId: string
-        }
+          uri: string;
+          label: string;
+          databaseId: string;
+        };
       }
-    ]
-  }
+    ];
+  };
 }
 
 export interface Page {
   author: {
     node: {
       avatar: {
-        url: string
-      }
-      name: string
-    }
-  }
-  databaseId: string
-  date: string
-  modified: string
-  slug: string
-  title: string
-  excerpt: string
-  content: string
-  featuredImage: FeaturedImage
+        url: string;
+      };
+      name: string;
+    };
+  };
+  databaseId: string;
+  date: string;
+  modified: string;
+  slug: string;
+  title: string;
+  excerpt: string;
+  content: string;
+  featuredImage: FeaturedImage;
   seo: {
-    metaDesc: string
-    title: string
-  }
+    metaDesc: string;
+    title: string;
+  };
 }
 
 export interface Post {
   author: {
     node: {
-      name: string
+      name: string;
       avatar: {
-        url: string
-      }
-    }
-  }
-  databaseId: string
-  date: string
-  modified: string
-  modified: string
-  slug: string
-  title: string
-  excerpt: string
-  content: string
-  commentCount: number
+        url: string;
+      };
+    };
+  };
+  databaseId: string;
+  date: string;
+  modified: string;
+  modified: string;
+  slug: string;
+  title: string;
+  excerpt: string;
+  content: string;
+  commentCount: number;
   categories: {
     nodes: [
       {
-        databaseId: string
-        name: string
+        databaseId: string;
+        name: string;
       }
-    ]
-  }
+    ];
+  };
   tags: {
     nodes: [
       {
-        databaseId: string
-        name: string
+        databaseId: string;
+        name: string;
       }
-    ]
-  }
-  featuredImage: FeaturedImage
+    ];
+  };
+  featuredImage: FeaturedImage;
   seo: {
-    metaDesc: string
-    title: string
-  }
+    metaDesc: string;
+    title: string;
+  };
   comments: {
     nodes: [
       {
-        databaseId: string
-        content: string
-        date: string
-        status: string
+        databaseId: string;
+        content: string;
+        date: string;
+        status: string;
         author: {
           node: {
             avatar: {
-              url: string
-            }
-            email: string
-            name: string
-            url: string
-          }
-        }
+              url: string;
+            };
+            email: string;
+            name: string;
+            url: string;
+          };
+        };
       }
-    ]
-  }
+    ];
+  };
 }
 
 export interface Book {
   bookFields: {
-    affiliateUrl: string
-    isbn: string
-  }
-  databaseId: string
-  date: string
-  modified: string
-  slug: string
-  title: string
-  excerpt: string
-  content: string
-  featuredImage: FeaturedImage
+    affiliateUrl: string;
+    isbn: string;
+  };
+  databaseId: string;
+  date: string;
+  modified: string;
+  slug: string;
+  title: string;
+  excerpt: string;
+  content: string;
+  featuredImage: FeaturedImage;
   seo: {
-    metaDesc: string
-    title: string
-  }
+    metaDesc: string;
+    title: string;
+  };
 }
 
 export interface AllPages {
   pages: {
-    nodes: Page[]
-  }
+    nodes: Page[];
+  };
 }
 
 export interface AllPosts {
   posts: {
-    nodes: Post[]
-  }
+    nodes: Post[];
+  };
+}
+
+export interface Products {
+  map(
+    arg0: (product: ProductNode) => import('react').JSX.Element
+  ): import('react').ReactNode;
+  nodes: ProductNode[];
+}
+
+export type ProductNode = SimpleProduct | VariableProduct;
+
+interface SimpleProduct extends BaseProduct {
+  price: string;
+  regularPrice: string;
+  salePrice: string;
+}
+
+interface VariableProduct extends BaseProduct {
+  price: string;
+  regularPrice: string;
+  salePrice: string;
+  variations: Variations;
+}
+
+interface BaseProduct {
+  databaseId: number;
+  name: string;
+  onSale: boolean;
+  slug: string;
+  image: Image;
+}
+
+interface Variations {
+  nodes: VariationNode[];
+}
+
+interface VariationNode {
+  price: string;
+  regularPrice: string;
+  salePrice: string;
+}
+
+interface Image {
+  sourceUrl: string;
+  altText: string;
+  mediaDetails: {
+    width: number;
+    height: number;
+  };
 }

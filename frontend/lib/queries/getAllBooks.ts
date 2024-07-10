@@ -1,5 +1,5 @@
-import {fetchGraphQL} from '@/lib/functions'
-import {Post} from '@/lib/types'
+import {fetchGraphQL} from '@/lib/functions';
+import {Post} from '@/lib/types';
 
 /**
  * Fetch all books.
@@ -32,9 +32,9 @@ export default async function getAllBooks() {
         }
       }
     }
-  `
+  `;
 
-  const response = await fetchGraphQL(query)
+  const response = await fetchGraphQL(query);
 
-  return response.data.books.nodes as Post[]
+  return response?.data?.books?.nodes as Post[];
 }

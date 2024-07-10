@@ -1,5 +1,5 @@
-import {fetchGraphQL} from '@/lib/functions'
-import {Book} from '@/lib/types'
+import {fetchGraphQL} from '@/lib/functions';
+import {Book} from '@/lib/types';
 
 /**
  * Fetch a book by slug.
@@ -8,10 +8,7 @@ export default async function getBookBySlug(slug: string) {
   const query = `
     query GetBookBySlug($slug: ID = "URI") {
       book(idType: SLUG, id: $slug) {
-        bookFields {
-          affiliateUrl
-          isbn
-        }
+       
         databaseId
         date
         modified
@@ -33,13 +30,13 @@ export default async function getBookBySlug(slug: string) {
         }
       }
     }
-  `
+  `;
 
   const variables = {
     slug: slug
-  }
+  };
 
-  const response = await fetchGraphQL(query, variables)
+  const response = await fetchGraphQL(query, variables);
 
-  return response.data.book as Book
+  return response.data.book as Book;
 }
