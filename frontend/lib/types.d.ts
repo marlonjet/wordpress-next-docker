@@ -197,6 +197,9 @@ interface BaseProduct {
   onSale: boolean;
   slug: string;
   image: Image;
+  featuredImage: FeaturedImage;
+  description: string;
+  shortDescription: string;
 }
 
 interface Variations {
@@ -217,3 +220,25 @@ interface Image {
     height: number;
   };
 }
+
+interface FeaturedImage {
+  node: {
+    altText: string;
+    databaseId: number;
+    sourceUrl: string;
+    srcSet: string;
+    title: string;
+    mediaDetails: {
+      width: number;
+      height: number;
+    };
+  };
+}
+
+// interface ButtonProps {
+//   label: string;
+//   onClick: () => void;
+//   disabled?: boolean;
+//   outline?: boolean;
+//   small?: boolean;
+// }

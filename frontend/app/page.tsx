@@ -25,16 +25,16 @@ export default async function Home() {
   }
 
   return (
-    <main className="flex flex-col gap-8">
-      <article>
+    <main className="">
+      <div>
         <h1 dangerouslySetInnerHTML={{__html: homepage.title}} />
         <div dangerouslySetInnerHTML={{__html: homepage.content}} />
-      </article>
+      </div>
 
-      <aside>
-        <div>
-          <h2>Latest Products</h2>
-          <div className="grid grid-cols-3 gap-4">
+      <section className="w-screen max-w-full flex justify-center">
+        <div className="container flex flex-col">
+          <h2 className="text-2xl font-bold mb-4">Latest Products</h2>
+          <div className="grid grid-cols-4 gap-4">
             {products.map((product: ProductNode) => (
               <div key={product?.databaseId}>
                 <div>
@@ -47,37 +47,43 @@ export default async function Home() {
                   />
                 </div>
                 <div>
-                  <h3 className="text-white">{product?.name}</h3>
+                  <Link href={`/product/${product?.slug}`}>
+                    <h3 className="text-white">{product?.name}</h3>
+                  </Link>
                 </div>
               </div>
             ))}
           </div>
         </div>
-        <h2 className="text-white">Latest Posts</h2>
-        <div className="flex flex-wrap gap-8">
-          {posts.map((post: Post) => (
-            <article className="w-72" key={post?.databaseId}>
-              <Image
-                alt={post?.featuredImage?.node?.altText}
-                height={post?.featuredImage?.node?.mediaDetails?.height}
-                src={post?.featuredImage?.node?.sourceUrl}
-                width={post?.featuredImage?.node?.mediaDetails.width}
-                priority={true}
-              />
-              <Link href={`/blog/${post.slug}`}>
-                <h2 dangerouslySetInnerHTML={{__html: post?.title}} />
-              </Link>
-              <p className="text-sm text-gray-500">
-                {post.commentCount} Comments
-              </p>
-              <div dangerouslySetInnerHTML={{__html: post?.excerpt}} />
-              <Link className="button" href={`/blog/${post?.slug}`}>
-                View Post
-              </Link>
-            </article>
-          ))}
+      </section>
+      <section className="w-screen max-w-full flex justify-center">
+        <div className="container flex flex-col">
+          <h2 className="text-white">Latest Posts</h2>
+          <div className="flex flex-wrap gap-8">
+            {posts.map((post: Post) => (
+              <article className="w-72" key={post?.databaseId}>
+                <Image
+                  alt={post?.featuredImage?.node?.altText}
+                  height={post?.featuredImage?.node?.mediaDetails?.height}
+                  src={post?.featuredImage?.node?.sourceUrl}
+                  width={post?.featuredImage?.node?.mediaDetails.width}
+                  priority={true}
+                />
+                <Link href={`/blog/${post.slug}`}>
+                  <h2 dangerouslySetInnerHTML={{__html: post?.title}} />
+                </Link>
+                <p className="text-sm text-gray-500">
+                  {post.commentCount} Comments
+                </p>
+                <div dangerouslySetInnerHTML={{__html: post?.excerpt}} />
+                <Link className="button" href={`/blog/${post?.slug}`}>
+                  View Post
+                </Link>
+              </article>
+            ))}
+          </div>
         </div>
-      </aside>
+      </section>
     </main>
   );
 }
