@@ -9,7 +9,9 @@ import {notFound} from 'next/navigation';
 /**
  * Fetches data from WordPress.
  */
-async function fetchData(slug: string) {
+async function fetchData(slugArray: string[]) {
+  const slug = slugArray.join('/');
+
   // If the slug is 'blog', fetch all posts.
   if (slug === 'blog') {
     return {posts: await getAllPosts(), context: 'blog'};
@@ -83,7 +85,7 @@ function RenderPostsList({posts, context}: {posts: Post[]; context: string}) {
 /**
  * Catch-all Archive Page route.
  */
-export default async function Archive({params}: {params: {slug: string}}) {
+export default async function Archive({params}: {params: {slug: string[]}}) {
   // Get the slug from the params.
   const {slug} = params;
 
